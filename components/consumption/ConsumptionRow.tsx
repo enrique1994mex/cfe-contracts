@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ConsumptionRecord } from "@/features/consumption/types";
 import { useDeleteConsumptionRecord } from "@/features/consumption/hooks";
 import { ConsumptionForm } from "./ConsumptionForm";
+import { BillingModal } from "@/components/billing/BillingModal";
 
 function fmtDate(iso: string): string {
   // Avoids timezone shift: parse YYYY-MM-DD directly
@@ -22,6 +23,7 @@ interface ConsumptionRowProps {
 
 export function ConsumptionRow({ record, contractId }: ConsumptionRowProps) {
   const [showEdit, setShowEdit] = useState(false);
+  const [showBilling, setShowBilling] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const { mutate: deleteRecord, isPending: isDeleting } =
     useDeleteConsumptionRecord(contractId);
@@ -92,9 +94,8 @@ export function ConsumptionRow({ record, contractId }: ConsumptionRowProps) {
               Eliminar
             </button>
             <button
-              disabled
-              className="text-xs font-medium text-green-700 px-2 py-1 rounded opacity-40 cursor-not-allowed"
-              title="Disponible próximamente"
+              onClick={() => setShowBilling(true)}
+              className="text-xs font-medium text-green-700 hover:text-green-800 px-2 py-1 rounded hover:bg-green-50 transition-colors"
             >
               Simular →
             </button>
@@ -107,6 +108,12 @@ export function ConsumptionRow({ record, contractId }: ConsumptionRowProps) {
         onClose={() => setShowEdit(false)}
         contractId={contractId}
         record={record}
+      />
+      <BillingModal
+        open={showBilling}
+        onClose={() => setShowBilling(false)}
+        contractId={contractId}
+        recordId={record.id}
       />
     </>
   );

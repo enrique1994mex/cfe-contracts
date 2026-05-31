@@ -1,15 +1,19 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 
 interface ModalProps {
   open: boolean;
   onClose: () => void;
   title: string;
   children: ReactNode;
+  size?: "md" | "xl";
 }
 
-export function Modal({ open, onClose, title, children }: ModalProps) {
+const sizes = { md: "max-w-md", xl: "max-w-2xl" };
+
+export function Modal({ open, onClose, title, children, size = "md" }: ModalProps) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -21,7 +25,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
 
   if (!open) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div
@@ -31,7 +35,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
       />
 
       {/* Panel */}
-      <div className="relative w-full max-w-md rounded-2xl bg-white shadow-xl mx-4">
+      <div className={`relative w-full ${sizes[size]} rounded-2xl bg-white shadow-xl mx-4`}>
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
           <h2 className="text-base font-semibold text-gray-900">{title}</h2>
@@ -49,6 +53,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
         {/* Body */}
         <div className="px-6 py-4">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
