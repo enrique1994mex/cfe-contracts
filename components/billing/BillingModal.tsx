@@ -45,13 +45,17 @@ export function BillingModal({
       )}
 
       {data && (
-        <div className="space-y-5 pb-2">
-          <BillingCard result={data} />
-          <div>
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
+        <div className="flex-1 min-h-0 flex flex-col gap-5 pb-2">
+          <div className="flex-shrink-0">
+            <BillingCard result={data} />
+          </div>
+          <div className="flex flex-col min-h-0 flex-1">
+            <p className="flex-shrink-0 text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
               Desglose por bloques
             </p>
-            <BillingBreakdown nonSummer={data.nonSummer} summer={data.summer} />
+            <div className="overflow-y-auto min-h-0 flex-1">
+              <BillingBreakdown nonSummer={data.nonSummer} summer={data.summer} />
+            </div>
           </div>
         </div>
       )}
