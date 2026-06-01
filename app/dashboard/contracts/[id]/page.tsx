@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { ConsumptionList } from "@/components/consumption/ConsumptionList";
+import { InsightsPanel } from "@/components/ai-insights/InsightsPanel";
 
 export default async function ContractDetailPage({
   params,
@@ -11,5 +12,10 @@ export default async function ContractDetailPage({
 
   if (isNaN(contractId)) notFound();
 
-  return <ConsumptionList contractId={contractId} />;
+  return (
+    <div className="space-y-6">
+      <ConsumptionList contractId={contractId} />
+      <InsightsPanel contractId={contractId} />
+    </div>
+  );
 }
