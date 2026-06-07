@@ -7,6 +7,11 @@ export const getContracts = async (): Promise<Contract[]> => {
   return res.data;
 }
 
+export const getContract = async (id: number): Promise<Contract> => {
+  const res = await api.get<Contract>(`/api/contracts/${id}`);
+  return res.data;
+}
+
 export const createContract = async (contractData: CreateContractInput): Promise<Contract> => {
   const res = await api.post<Contract>("/api/contracts", contractData);
   return res.data;

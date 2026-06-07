@@ -10,6 +10,15 @@ export const useContracts = () => {
   });
 };
 
+export const useContract = (id: number) => {
+  return useQuery({
+    queryKey: ["contracts", id],
+    queryFn: () => contractsApi.getContract(id),
+    enabled: id > 0,
+    retry: false,
+  });
+};
+
 export const useCreateContract = () => {
   const queryClient = useQueryClient();
 
