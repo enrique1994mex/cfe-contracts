@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useConsumptionRecords } from "@/features/consumption/hooks";
-import { useContracts } from "@/features/contracts/hooks";
+import { useContract } from "@/features/contracts/hooks";
 import { ConsumptionRow } from "./ConsumptionRow";
 import { ConsumptionForm } from "./ConsumptionForm";
 import { Button } from "@/components/ui/Button";
@@ -18,8 +18,7 @@ export function ConsumptionList({ contractId }: ConsumptionListProps) {
   const [showCreate, setShowCreate] = useState(false);
 
   const { data: records, isLoading, isError } = useConsumptionRecords(contractId);
-  const { data: contracts } = useContracts();
-  const contract = contracts?.find((c) => c.id === contractId);
+  const { data: contract } = useContract(contractId);
 
   if (isLoading) {
     return (
