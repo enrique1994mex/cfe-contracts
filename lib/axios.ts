@@ -58,6 +58,18 @@ api.interceptors.response.use(
       return api(original);
     } catch {
       setAccessToken(null);
+      // Call logout to let the server clear the refreshToken cookie before
+      // redirecting; otherwise the middleware will redirect straight back to
+      // /dashboard because the stale cookie is still present.
+      try {
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`,
+          {},
+          { withCredentials: true }
+        );
+      } catch {
+        // Best-effort: if logout also fails, continue to redirect anyway.
+      }
       window.location.href = "/login";
       return Promise.reject(error);
     } finally {
