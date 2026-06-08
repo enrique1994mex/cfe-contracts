@@ -6,21 +6,23 @@ const PROTECTED_ROUTES = ["/dashboard"];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const hasRefreshToken = request.cookies.has("refreshToken");
+  // hasSession is set on the frontend domain by the client after login,
+  // so the middleware can read it regardless of where the API is hosted.
+  const hasSession = request.cookies.has("hasSession");
 
   if (pathname === "/") {
-    const destination = hasRefreshToken ? "/dashboard" : "/login";
+    const destination = hasSession ? "/dashboard" : "/login";
     return NextResponse.redirect(new URL(destination, request.url));
   }
 
   const isProtected = PROTECTED_ROUTES.some((r) => pathname.startsWith(r));
   const isPublic = PUBLIC_ROUTES.some((r) => pathname.startsWith(r));
 
-  if (isProtected && !hasRefreshToken) {
+  if (isProtected && !hasSession) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (isPublic && hasRefreshToken) {
+  if (isPublic && hasSession) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 

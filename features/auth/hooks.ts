@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import * as authApi from "./api";
 import { setAccessToken } from "@/lib/auth";
+import { setSessionCookie, clearSessionCookie } from "@/lib/session";
 import type { LoginInput, RegisterInput } from "./schemas";
 
 export const useLogin = () => {
@@ -11,6 +12,7 @@ export const useLogin = () => {
     mutationFn: (data: LoginInput) => authApi.login(data),
     onSuccess: ({ accessToken }) => {
       setAccessToken(accessToken);
+      setSessionCookie();
       router.push("/dashboard");
     },
   });
@@ -35,6 +37,7 @@ export const useLogout = () => {
     mutationFn: authApi.logout,
     onSuccess: () => {
       setAccessToken(null);
+      clearSessionCookie();
       queryClient.clear();
       router.push("/login");
     },

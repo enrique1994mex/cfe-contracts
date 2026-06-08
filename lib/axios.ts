@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getAccessToken, setAccessToken } from "./auth";
+import { clearSessionCookie } from "./session";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -58,9 +59,7 @@ api.interceptors.response.use(
       return api(original);
     } catch {
       setAccessToken(null);
-      // Call logout to let the server clear the refreshToken cookie before
-      // redirecting; otherwise the middleware will redirect straight back to
-      // /dashboard because the stale cookie is still present.
+      clearSessionCookie();
       try {
         await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`,
@@ -68,7 +67,7 @@ api.interceptors.response.use(
           { withCredentials: true }
         );
       } catch {
-        // Best-effort: if logout also fails, continue to redirect anyway.
+        // best-effort
       }
       window.location.href = "/login";
       return Promise.reject(error);
