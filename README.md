@@ -88,14 +88,13 @@ npm run dev
 
 The app will be available at `http://localhost:3000`.
 
+## Live Demo
+
+[https://cfe-contracts-production.up.railway.app](https://cfe-contracts-production.up.railway.app)
+
 ## Project Status
 
-Frontend is complete and functional.
-
-Planned next steps:
-- Charts and consumption history reports
-- Pagination for records table
-- Deployment
+Frontend is complete and deployed.
 
 ---
 
@@ -183,11 +182,10 @@ npm run dev
 
 La app estará disponible en `http://localhost:3000`.
 
+## Demo en vivo
+
+[https://cfe-contracts-production.up.railway.app](https://cfe-contracts-production.up.railway.app)
+
 ## Estado del proyecto
 
-El frontend está completo y funcional.
-
-Próximos pasos:
-- Gráficas y reportes de historial de consumo
-- Paginación en la tabla de registros
-- Despliegue
+El frontend está completo y desplegado.
