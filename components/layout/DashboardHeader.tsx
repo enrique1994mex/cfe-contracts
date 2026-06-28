@@ -12,7 +12,7 @@ export function DashboardHeader() {
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-gray-200">
-      <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
+      <div className="max-w-[1400px] mx-auto px-4 h-14 flex items-center justify-between gap-4">
         {/* Brand */}
         <div className="flex items-center gap-2.5 shrink-0">
           <div className="w-7 h-7 rounded-md bg-green-700 flex items-center justify-center">

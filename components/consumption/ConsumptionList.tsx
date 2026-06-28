@@ -37,7 +37,7 @@ export function ConsumptionList({ contractId }: ConsumptionListProps) {
   }
 
   return (
-    <>
+    <div>
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 mb-6 text-sm">
         <Link
@@ -115,6 +115,6 @@ export function ConsumptionList({ contractId }: ConsumptionListProps) {
         onClose={() => setShowCreate(false)}
         contractId={contractId}
       />
-    </>
+    </div>
   );
 }
