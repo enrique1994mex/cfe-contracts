@@ -37,14 +37,33 @@ export function DashboardHeader() {
           >
             Contratos
           </Link>
+          {user?.role === "ADMIN" && (
+            <Link
+              href="/dashboard/users"
+              className={`px-3 py-1.5 rounded-md text-sm transition-colors ${
+                pathname === "/dashboard/users"
+                  ? "bg-green-50 text-green-700 font-medium"
+                  : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
+              }`}
+            >
+              Usuarios
+            </Link>
+          )}
         </nav>
 
         {/* User + logout */}
         <div className="flex items-center gap-3 shrink-0">
           {user && (
-            <span className="hidden md:block text-xs text-gray-400 max-w-48 truncate">
-              {user.email}
-            </span>
+            <div className="hidden md:flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                <span className="text-xs font-semibold text-green-700">
+                  {user.email[0].toUpperCase()}
+                </span>
+              </div>
+              <span className="text-xs text-gray-400 max-w-48 truncate">
+                {user.email}
+              </span>
+            </div>
           )}
           <Button
             variant="secondary"
